@@ -1,21 +1,20 @@
 package Kitapci2;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 public class Kitaplik {
     static int sayac = 1008;
     static String kitapAdi, yazarAdi;
     static double kitapFiyati;
     static LocalDate kayitTarihi = LocalDate.now();
-
+    static DateTimeFormatter tarih = DateTimeFormatter.ofPattern("dd.MM.YYYY");
     static Scanner scan = new Scanner(System.in);
-    static Map<Integer, String> kitaplarMap = new HashMap<>();
-
+    static Scanner scanner = new Scanner(System.in);
+    static Map<Integer, String> kitaplarMap = new TreeMap<>();
+    static String eklenecekValue ="";
 
     public static void feykKitaplikEkle() {
 
@@ -30,41 +29,58 @@ public class Kitaplik {
 
 
     }
+    public static void sekil(){
+        System.out.println("*********************** KİTAP LİSTESİ **************************");
+        System.out.println("Kitap No   Kitap Adı                Yazarı              Fiyatı       Kayıt Tarihi");
+        System.out.println("*********************************************************************");
+    }
+
 
     public static void kitapEkle() throws InterruptedException {
-        System.out.println("Eklemek istediğiniz kitabın ismi ");
 
-        try {
-            Kitaplik.kitapAdi = scan.nextLine();
+
+
+            System.out.println("Eklemek istediğiniz kitabın ismi ");
+
+            kitapAdi = scanner.nextLine();
+
             System.out.println("Yazar ismi ");
-            Kitaplik.yazarAdi = scan.nextLine();
-            System.out.println("Kitabın Fiyatı ");
-            Kitaplik.kitapFiyati = scan.nextDouble();
-        } catch (Exception e) {
+
+            yazarAdi = scanner.nextLine();
+
+               System.out.println("Kitabın Fiyatı ");
+                    try {        kitapFiyati = scan.nextDouble();
+
+
+
+        eklenecekValue = kitapAdi + "- " +
+                yazarAdi + "- " + kitapFiyati + "₺- " + tarih.format(kayitTarihi);
+        kitaplarMap.put(sayac, eklenecekValue);
+       System.out.println(sayac + " " + eklenecekValue);
+        sayac++;
+
+        Thread.sleep(300);
+
+    }catch (Exception e) {
+            scan.nextLine();
             System.out.println("yanlış giriş yaptınız");
+              System.out.println("");
             kitapEkle();
+
         }
-
-        String eklenecekValue = Kitaplik.kitapAdi + ", " +
-                Kitaplik.yazarAdi + ", " + Kitaplik.kitapFiyati + "₺, " + Kitaplik.kayitTarihi;
-        Kitaplik.kitaplarMap.put(Kitaplik.sayac, eklenecekValue);
-        System.out.println(Kitaplik.sayac + " " + eklenecekValue);
-        Kitaplik.sayac++;
-
-        Thread.sleep(5000);
     }
 
 
     public static void numaraIleArama() throws InterruptedException {
+try {
 
-        System.out.println("Lütfen aradığınız kitabın numarasını giriniz.");
-        int arananKitapNo = Integer.parseInt(scan.next());
+    System.out.println("Lütfen aradığınız kitabın numarasını giriniz.");
+    int arananKitapNo = scan.nextInt();
 
-        Set<Map.Entry<Integer, String>> aranankitapEntrySet = Kitaplik.kitaplarMap.entrySet();
-        System.out.println("******************* KİTAP NO İLE BULUNAN KİTAP LİSTESİ ****************");
-        System.out.println("Kitap No   Kitap Adı          Yazarı          Fiyatı   Kayıt Tarihi");
-        System.out.println("*********************************************************************");
+    Set<Map.Entry<Integer, String>> aranankitapEntrySet = kitaplarMap.entrySet();
 
+
+    if (kitaplarMap.containsKey(arananKitapNo)) {
         for (Map.Entry<Integer, String> each : aranankitapEntrySet
         ) {
             int eachKey = each.getKey();
@@ -72,78 +88,96 @@ public class Kitaplik {
             String[] eachValuArr = eachValue.split("-");
 
             if (arananKitapNo == eachKey) {
-                System.out.println(eachKey + "   " + eachValuArr[0] + "  " +
-                        eachValuArr[1] + "   " + eachValuArr[2] + "  " + eachValuArr[3]);
+                sekil();
+                System.out.printf("%-10s   %-20s   %-15s   %-8s   %-8s   %n", eachKey, eachValuArr[0], eachValuArr[1], eachValuArr[2], eachValuArr[3]);
             }
-            // scan.nextLine();
         }
-        Thread.sleep(5000);
+    } else {
+        System.out.println("Aradığınız kitap bulunmamaktadır.\n");
+        System.out.println("Ana menüye yönlendiriliyorsunuz.... ");
+        Thread.sleep(1000);
+    }
+}catch (Exception e) {
+    System.out.println("Yanlış giriş yaptınız...");
+    System.out.println("");
+    scan.nextLine();
+    numaraIleArama();
+}    Thread.sleep(1000);
     }
 
 
     public static void isimIleArama() throws InterruptedException {
 
-        System.out.println("Lütfen aradığınız kitabın ismini giriniz.");
-        String arananKitapIsmi = scan.nextLine();
-
-        Set<Map.Entry<Integer,String>> aranankitapEntrySet = Kitaplik.kitaplarMap.entrySet();
-        System.out.println("******************* KİTAP ADI İLE BULUNAN KİTAP LİSTESİ ****************");
-        System.out.println("Kitap No   Kitap Adı          Yazarı          Fiyatı   Kayıt Tarihi");
-        System.out.println("*********************************************************************");
-
-        for (Map.Entry<Integer, String> each : aranankitapEntrySet
-        ) {
-            int eachKey = each.getKey();
-            String eachValue = each.getValue();
-            String[] eachValuArr = eachValue.split("-");
-
-            if (arananKitapIsmi.equalsIgnoreCase(eachValuArr[0])) {
-                System.out.println(eachKey + "   " + eachValuArr[0] + "  " +
-                        eachValuArr[1] + "   " + eachValuArr[2] + "  " + eachValuArr[3]);
-            }
-
-
-        }
-        Thread.sleep(5000);
-    }
-
-
-
-    public static void numaraIleSilme() {
-
-        System.out.println("Silmek istediğiniz kitabın numarasını giriniz.");
-        String silinecekKitap = scan.nextLine();
-        String silinecekValue = Kitaplik.kitaplarMap.get(silinecekKitap);
-        String sonucValue = Kitaplik.kitaplarMap.remove(silinecekKitap);
         try {
-            boolean sonuc = sonucValue.equals(silinecekValue);
-            if (sonuc == true) {
-                System.out.println("İstediğiniz kitap silindi...");
+
+            System.out.println("Lütfen aradığınız kitabın ismini giriniz.");
+            String arananKitapIsmi = scanner.nextLine();
+
+            Set<Map.Entry<Integer, String>> aranankitapEntrySet = kitaplarMap.entrySet();
+
+            boolean flag = false;
+
+            for (Map.Entry<Integer, String> each : aranankitapEntrySet
+            ) {
+                int eachKey = each.getKey();
+                String eachValue = each.getValue();
+                String[] eachValuArr = eachValue.split("-");
+
+                if (arananKitapIsmi.equalsIgnoreCase(eachValuArr[0])) {
+
+                    sekil();
+                    System.out.printf("%-10s %-20s %-15s %-8s %-8s %n", eachKey, eachValuArr[0], eachValuArr[1], eachValuArr[2], eachValuArr[3]);
+                    flag = true;
+                }
             }
-        } catch (Exception e) {
-            System.out.println("Silmek istediğiniz kitap bulunamadı.");
+            if (!flag) {
+                System.out.println("Aradığınız kitap bulunmamaktadır.");
+
+            }
+        }catch (Exception e){
+            System.out.println("Yanlış giriş yaptınız...");
+            isimIleArama();
         }
-        scan.nextLine();
+        Thread.sleep(1000);
+    }
+
+
+
+    public static void numaraIleSilme() throws InterruptedException {
+         try {
+             Set<Map.Entry<Integer, String>> silinecekkitapEntrySet = kitaplarMap.entrySet();
+             System.out.println("Silmek istediğiniz kitabın numarasını giriniz.");
+             int silinecekKitap = scan.nextInt();
+
+             if (kitaplarMap.containsKey(silinecekKitap)) {
+                 Kitaplik.kitaplarMap.remove(silinecekKitap);
+                 System.out.println("Kitap silinmiştir.");
+             } else {
+                 System.out.println("Silmek istediğiniz kitap bulunamadı.");
+             }
+         }catch (Exception e){
+             System.out.println("Yanlış giriş yaptınız...");
+             scan.nextLine();
+             numaraIleSilme();
+         }
+        Thread.sleep(1000);
     }
 
 
 
 
-    public static void kitapListele() throws InterruptedException{
-        Set<Map.Entry<Integer,String>> kitapEntrySet = Kitaplik.kitaplarMap.entrySet();
-        System.out.println("*********************** KİTAP LİSTESİ **************************");
-        System.out.println("Kitap No   Kitap Adı          Yazarı          Fiyatı   Kayıt Tarihi");
-        System.out.println("*********************************************************************");
+    public static void kitapListele() throws InterruptedException {
+        Set<Map.Entry<Integer,String>> kitapEntrySet = kitaplarMap.entrySet();
+
+        sekil();
         for (Map.Entry<Integer,String> each : kitapEntrySet
         ) {
             int eachKey = each.getKey();
             String  eachValue = each.getValue();
             String [] eachValuArr = eachValue.split("-");
-
-            System.out.println(eachKey +"   " + eachValuArr[0] + "  " +
-                    eachValuArr[1]+"   " + eachValuArr[2] );
-        }
-        Thread.sleep(5000);
+            System.out.printf("%-10s  %-20s   %-20S   %-8s   %-8s   %n",eachKey,eachValuArr[0],eachValuArr[1],eachValuArr[2],eachValuArr[3]);
+           }
+        Thread.sleep(1000);
 
     }
 

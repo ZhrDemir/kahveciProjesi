@@ -12,16 +12,16 @@ public class DepoMenu extends Kitaplik {
     public static void anaMenu() throws InterruptedException {
 
         System.out.println("");
-        System.out.println("*********************  KİTAPÇI  *****************");
+        System.out.println("\t\t*********************  KİTAPÇI  *****************");
         System.out.println(" ");
-        System.out.println("*********************   Menü  ********************");
-        System.out.println("1 - Kitap Ekle\n" +
-                "2 - Numara ile Kitap Görüntüleme\n" +
-                "3 - Kitap Adı ile Görüntüleme\n" +
-                "4 - Numara ile Kitap Sil\n" +
-                "5 - Tüm Kitaplari Listele\n" +
-                "6 - Çıkış  ");
-        System.out.println("***************************************************");
+        System.out.println("\t\t*********************   Menü  ********************");
+        System.out.println("\t\t1 - Kitap Ekle\n" +
+                "\t\t2 - Numara ile Kitap Görüntüleme\n" +
+                "\t\t3 - Kitap Adı ile Görüntüleme\n" +
+                "\t\t4 - Numara ile Kitap Sil\n" +
+                "\t\t5 - Tüm Kitaplari Listele\n" +
+                "\t\t6 - Çıkış  ");
+        System.out.println("\t\t***************************************************\n");
 
         System.out.println("Lütfen menüden tercihinizi giriniz.");
         tercih = scan.nextLine();

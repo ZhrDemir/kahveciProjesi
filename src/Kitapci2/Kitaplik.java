@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Kitaplik {
     static int sayac = 1008;
     static String kitapAdi, yazarAdi;
-    static double kitapFiyati;
+    static int kitapFiyati;
     static LocalDate kayitTarihi = LocalDate.now();
     static DateTimeFormatter tarih = DateTimeFormatter.ofPattern("dd.MM.YYYY");
     static Scanner scan = new Scanner(System.in);
@@ -30,9 +30,9 @@ public class Kitaplik {
 
     }
     public static void sekil(){
-        System.out.println("*********************** KİTAP LİSTESİ **************************");
-        System.out.println("Kitap No   Kitap Adı                Yazarı              Fiyatı       Kayıt Tarihi");
-        System.out.println("*********************************************************************");
+       // System.out.println("******************************* KİTAP LİSTESİ ***********************************");
+        System.out.println("Kitap No   Kitap Adı             Yazarı              Fiyatı       Kayıt Tarihi");
+        System.out.println("*********************************************************************************");
     }
 
 
@@ -48,23 +48,28 @@ public class Kitaplik {
 
             yazarAdi = scanner.nextLine();
 
-               System.out.println("Kitabın Fiyatı ");
-                    try {        kitapFiyati = scan.nextDouble();
+            System.out.println("Kitabın Fiyatı ");
+    try {        kitapFiyati = scan.nextInt();
 
 
 
-        eklenecekValue = kitapAdi + "- " +
-                yazarAdi + "- " + kitapFiyati + "₺- " + tarih.format(kayitTarihi);
+
+        eklenecekValue = kitapAdi + "-" +
+        yazarAdi + "-" + kitapFiyati + "₺-" + tarih.format(kayitTarihi);
         kitaplarMap.put(sayac, eklenecekValue);
-       System.out.println(sayac + " " + eklenecekValue);
+        System.out.println("Kitap eklenmiştir...\n");
+        sekil();
+        System.out.printf("%-10s    %-20s   %-15s    %-8s    %-8s     %n\n", sayac, kitapAdi, yazarAdi, kitapFiyati, tarih.format(kayitTarihi));
+
+       // System.out.println(sayac + " " + eklenecekValue);
         sayac++;
 
-        Thread.sleep(300);
+        Thread.sleep(3000);
 
     }catch (Exception e) {
             scan.nextLine();
-            System.out.println("yanlış giriş yaptınız");
-              System.out.println("");
+            System.out.println("Yanlış giriş yaptınız");
+            System.out.println("");
             kitapEkle();
 
         }
@@ -89,20 +94,20 @@ try {
 
             if (arananKitapNo == eachKey) {
                 sekil();
-                System.out.printf("%-10s   %-20s   %-15s   %-8s   %-8s   %n", eachKey, eachValuArr[0], eachValuArr[1], eachValuArr[2], eachValuArr[3]);
+                System.out.printf("%-10s  %-20s  %-15s  %-8s    %-8s  %n", eachKey, eachValuArr[0], eachValuArr[1], eachValuArr[2], eachValuArr[3]);
             }
         }
     } else {
         System.out.println("Aradığınız kitap bulunmamaktadır.\n");
-        System.out.println("Ana menüye yönlendiriliyorsunuz.... ");
-        Thread.sleep(1000);
+        System.out.println("Ana menüye yönlendiriliyorsunuz.... \n");
+        Thread.sleep(3000);
     }
 }catch (Exception e) {
     System.out.println("Yanlış giriş yaptınız...");
     System.out.println("");
     scan.nextLine();
     numaraIleArama();
-}    Thread.sleep(1000);
+}
     }
 
 
@@ -126,19 +131,19 @@ try {
                 if (arananKitapIsmi.equalsIgnoreCase(eachValuArr[0])) {
 
                     sekil();
-                    System.out.printf("%-10s %-20s %-15s %-8s %-8s %n", eachKey, eachValuArr[0], eachValuArr[1], eachValuArr[2], eachValuArr[3]);
+                    System.out.printf("%-10s %-20s %-15s    %-8s %-8s %n", eachKey, eachValuArr[0], eachValuArr[1], eachValuArr[2], eachValuArr[3]);
                     flag = true;
                 }
             }
             if (!flag) {
                 System.out.println("Aradığınız kitap bulunmamaktadır.");
-
+                System.out.println("\nAna menüye yönlendiriliyorsunuz.... \n");
             }
         }catch (Exception e){
             System.out.println("Yanlış giriş yaptınız...");
             isimIleArama();
         }
-        Thread.sleep(1000);
+        Thread.sleep(3000);
     }
 
 
@@ -154,13 +159,14 @@ try {
                  System.out.println("Kitap silinmiştir.");
              } else {
                  System.out.println("Silmek istediğiniz kitap bulunamadı.");
+                 System.out.println("\nAna menüye yönlendiriliyorsunuz.... \n");
              }
          }catch (Exception e){
              System.out.println("Yanlış giriş yaptınız...");
              scan.nextLine();
              numaraIleSilme();
          }
-        Thread.sleep(1000);
+        Thread.sleep(3000);
     }
 
 
@@ -168,6 +174,7 @@ try {
 
     public static void kitapListele() throws InterruptedException {
         Set<Map.Entry<Integer,String>> kitapEntrySet = kitaplarMap.entrySet();
+        System.out.println("******************************* KİTAP LİSTESİ ***********************************");
 
         sekil();
         for (Map.Entry<Integer,String> each : kitapEntrySet
@@ -175,9 +182,10 @@ try {
             int eachKey = each.getKey();
             String  eachValue = each.getValue();
             String [] eachValuArr = eachValue.split("-");
-            System.out.printf("%-10s  %-20s   %-20S   %-8s   %-8s   %n",eachKey,eachValuArr[0],eachValuArr[1],eachValuArr[2],eachValuArr[3]);
+            System.out.printf("%-10s %-20s %-20S %-8s %-8s %n",eachKey,eachValuArr[0],eachValuArr[1],eachValuArr[2],eachValuArr[3]);
            }
-        Thread.sleep(1000);
+        System.out.println("\nAna menüye yönlendiriliyorsunuz.... \n");
+        Thread.sleep(3000);
 
     }
 
